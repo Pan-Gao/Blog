@@ -1,0 +1,19 @@
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <typeAliases>
+        <typeAlias alias="Blog" type="com.yrw.model.Blog"/>
+        <typeAlias alias="User" type="com.yrw.model.User"/>
+        <typeAlias alias="Tag" type="com.yrw.model.Tag"/>
+        <typeAlias alias="Comment" type="com.yrw.model.Comment"/>
+    </typeAliases>
+     <plugins>
+    	    <plugin interceptor="com.github.pagehelper.PageHelper">
+      		<property name="dialect" value="mysql"/>
+    		</plugin>
+  	</plugins>
+
+</configuration>
