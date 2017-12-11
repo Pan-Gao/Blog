@@ -15,7 +15,6 @@ import redis.clients.jedis.JedisPoolConfig;
 
 
 @Configuration  
-@EnableCaching
 public class RedisConfig {  
      
     @Bean  

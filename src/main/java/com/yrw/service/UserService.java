@@ -27,7 +27,7 @@ public class UserService{
 	
 	@Autowired
 	private BlogService blogService;
-	
+	private RedisTemplate<String, String> redisTemplate;
 	private ZSetOperations<String, String> zSetOperations;
 	private ValueOperations<String, String> valueOperations;
 	
@@ -49,7 +49,7 @@ public class UserService{
 		String userDetails = valueOperations.get("userId:"+id);
 		if(userDetails == null) {
 			//缓存里没有，从数据库里得到数据，根据浏览次数排名来判断是否要缓存
-			logger.info("从数据库里读取User");
+			//logger.info("从数据库里读取User");
 			User user = userDao.getUserById(id);
 			Long rank = zSetOperations.rank("hotUsersRank", "userId:"+id);
 			if(rank<=20) {
@@ -60,7 +60,7 @@ public class UserService{
 			}
 			return user;
 		}else {
-			logger.info("从redis里读取User");
+			//logger.info("从redis里读取User");
 			//缓存里有，直接取出
 			Gson gson = new Gson();
 			return gson.fromJson(userDetails, User.class);
@@ -75,11 +75,9 @@ public class UserService{
 	//更新用户信息
 	public void updateUser(User user) {
 		userDao.updateUser(user);
+		//清除缓存
 		if(valueOperations.get("userId:"+user.getId())!=null) {
-			//更新缓存
-			Gson gson = new Gson();
-			System.out.println("updateuser");
-			valueOperations.set("userId:"+user.getId(), gson.toJson(user));
+			redisTemplate.delete("userId:"+user.getId());
 		}
 	}
 	

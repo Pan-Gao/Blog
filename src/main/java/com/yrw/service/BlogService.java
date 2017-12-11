@@ -47,7 +47,7 @@ public class BlogService{
 	private BlogDao blogDao;
 	private TagDao tagDao;
 	private UserDao userDao;
-	private RedisTemplate redisTemplate;
+	private RedisTemplate<String, String> redisTemplate;
 	private ZSetOperations<String, String> zSetOperations;
 	private ValueOperations<String, String> valueOperations;
 	
@@ -72,22 +72,22 @@ public class BlogService{
 		String blogDetails = valueOperations.get("blogId:"+id);
 		if(blogDetails == null) {
 			//缓存里没有，从数据库里得到数据，根据浏览次数排名来判断是否要缓存
-			logger.info("从数据库里读取Blog");
+			logger.debug("从数据库里读取Blog");
 			Blog blog = blogDao.getBlogById(id);
 			//找不到这篇博客，404
 			if(blog == null) {
 				throw new NotFoundException("blog not found");
 			}
-			Long rank = zSetOperations.rank("hotBlogsRank", "blogId:"+id);
+			/*Long rank = zSetOperations.rank("hotBlogsRank", "blogId:"+id);
 			if(rank<=20) {
 				//排名在前二十，要缓存，转换成json
 				Gson gson = new Gson();
 				String blogJson = gson.toJson(blog);
 				valueOperations.set("blogId:"+id, blogJson);
-			}
+			}*/
 			return blog;
 		}else {
-			logger.info("从redis里读取Blog");
+			logger.debug("从redis里读取Blog");
 			//缓存里有，直接取出
 			Gson gson = new Gson();
 			Blog blog = gson.fromJson(blogDetails, Blog.class);
@@ -132,10 +132,9 @@ public class BlogService{
 		//更新标签
 		blog = TagUtils.setBlogTags(blog, tags);
 		
-		//如果是热门博客，缓存也要更新
+		//如果是热门博客，清除缓存
 		if(valueOperations.get("blogId:"+id)!=null) {
-			Gson gson = new Gson();
-			valueOperations.set("blogId:"+id, gson.toJson(blog));
+			redisTemplate.delete("blogId:"+id);
 		}
 	}
 	

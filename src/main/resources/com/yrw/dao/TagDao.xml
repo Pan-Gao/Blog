@@ -4,7 +4,8 @@
 
 <mapper namespace="com.yrw.dao.TagDao">
 
-  <cache />
+  <!-- 二级缓存 -->
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
   <cache-ref namespace="com.yrw.dao.BlogDao"/>
   
   <select id="findOne" resultType="Tag">

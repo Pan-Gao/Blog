@@ -21,8 +21,10 @@ import com.yrw.model.User;
 import com.yrw.service.BlogService;
 import com.yrw.service.UserService;
 
+import net.sf.ehcache.constructs.web.filter.SimplePageCachingFilter;
+
 @Controller
-public class RegisterController{
+public class RegisterController {
 	
 	@Autowired
 	private UserService userService;
