@@ -11,22 +11,23 @@ import org.springframework.stereotype.Service;
 import com.yrw.dao.TagDao;
 import com.yrw.model.Blog;
 import com.yrw.model.Tag;
+import com.yrw.service.CacheService;
 import com.yrw.service.TagService;
 
 @Service
 public class TagUtils {
 	
 	private static TagDao tagDao;
-	private static TagService tagService;
+	private static CacheService cacheService;
 	
 	@Autowired
 	public void setTagDao(TagDao tagDao) {
-		this.tagDao = tagDao;
+		TagUtils.tagDao = tagDao;
 	}
 	
 	@Autowired
-	public void setTagService(TagService tagService) {
-		this.tagService = tagService;
+	public void setCacheService(CacheService cacheService) {
+		TagUtils.cacheService = cacheService;
 	}
     
 	//得到String类型的tag
@@ -34,7 +35,7 @@ public class TagUtils {
           StringBuilder tagStringBuilder = new StringBuilder();
           boolean first = true;
           for(Tag tag:tags) {
-          		if(first == true) {
+          		if(first) {
           			tagStringBuilder.append(tag.getName());
           			first = false;
           		}else {
@@ -44,7 +45,7 @@ public class TagUtils {
           return tagStringBuilder.toString();
   	}
   	
-  	//得到List类型的tag
+  	//得到Set类型的tag
   	public static Set<Tag> toSetTags(String tags){
   		String[] tagStr = tags.split(",");
   		Set<Tag> tagList = new HashSet<>();
@@ -66,7 +67,7 @@ public class TagUtils {
 	  		//本来标签不为空，删除老的标签
 	  		tagDao.deleteByBlog(blog.getId());
 	  		for(Tag tag:oldTagsSet) {
-		    		tagService.incrblogsNum(tag, 1);
+	  			cacheService.incrScore("tag", tag.getName(), 1);
 		    	}
   		}
 
@@ -87,7 +88,7 @@ public class TagUtils {
 	    		}
 	    	}
 	    	for(Tag tag:newTagsSet) {
-	    		tagService.incrblogsNum(tag, -1);
+	    		cacheService.incrScore("tag", tag.getName(), -1);
 	    	}
 	    	blog.setTags(newTagsSet);
 	    	return blog;

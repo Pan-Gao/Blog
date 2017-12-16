@@ -18,13 +18,8 @@ public interface BlogDao {
 	//通过博客id找到博客
 	Blog getBlogById(@Param("id") Long id);
 	
-	//找到某一个作者的所有博客
-	List<Blog> getBlogsByAuthor(@Param("id") Long id);
-	
-    List<Blog> getBlogsByTag(@Param("tag") String tag);
-	
-	//返回所有博客
-	List<Blog> getAllBlogs();
+	//通过一定条件查找博客
+	List<Blog> getBlogs(@Param("userId") Long userId, @Param("tag") String tag);
 	
 	//创建一篇新的博客
 	void createBlog(@Param("blog") Blog blog);
@@ -34,7 +29,5 @@ public interface BlogDao {
 	
 	//通过id删除一篇博客
 	void deleteBlog(@Param("id") Long id);
-	
-	//增加博客浏览量
-	void updateBlogHits(@Param("id") Long id);
+
 }

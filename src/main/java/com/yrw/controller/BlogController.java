@@ -46,7 +46,7 @@ public class BlogController{
 		if(tag.isPresent()) {
 			model.addAttribute("blogs",new PageInfo<>(blogService.getBlogsByTag(tag.get())));
 		}else {
-			model.addAttribute("blogs",new PageInfo<>(blogService.findBlogs()));
+			model.addAttribute("blogs",new PageInfo<>(blogService.showBlogs()));
 		}
 		return "list";
 	}
@@ -54,7 +54,7 @@ public class BlogController{
 	//展示某一篇博文
 	@GetMapping("/blogs/{id}")
 	public String showBlog(@PathVariable("id") Long id, Model model) throws NotFoundException {
-		Blog blog = blogService.getBlog(id);
+		Blog blog = blogService.getBlogForBrowse(id);
 		model.addAttribute("blog", blog);
 		model.addAttribute("comments", commentService.getCommentsByBlogId(id));
 		return "item";
@@ -63,7 +63,7 @@ public class BlogController{
 	//获取编辑某一篇博文的页面
 	@GetMapping("/blogs/{id}/edit")
 	public String showEditBlog(@PathVariable("id") Long id, Model model) throws NotFoundException {
-		Blog blog = blogService.getBlog(id);
+		Blog blog = blogService.getBlogForEdit(id);
 		model.addAttribute("blog", blog);
 		model.addAttribute("alltags", TagUtils.toStringTags(blog.getTags()));
 		model.addAttribute("edit", 1);

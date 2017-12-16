@@ -19,22 +19,17 @@ public class TagService {
 	private ZSetOperations<String, String> zSetOperations;
 	
 	@Autowired
-	public TagService(RedisTemplate redisTemplate) {
+	public TagService(RedisTemplate<String, String> redisTemplate) {
 		this.zSetOperations = redisTemplate.opsForZSet();
 	}
 	
 	public List<Tag> getTags() {
 		Set<String> tagsSet = zSetOperations.range("tags", 0, 19);
 		List<Tag> tags = new ArrayList<>();
-		Gson gson = new Gson();
 		for(String tag:tagsSet) {
 			tags.add(new Tag(tag, zSetOperations.score("tags", tag)));
 		}
 		return tags;
-	}
-	
-	public void incrblogsNum(Tag tag, int n) {
-		zSetOperations.incrementScore("tags", tag.getName(), n);
 	}
 	
 }

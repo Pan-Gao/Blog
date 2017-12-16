@@ -7,14 +7,16 @@
 	<!-- 二级缓存 -->
 	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
 	
-<select id="getUserById" resultType="User">
+<select id="getUser" resultType="User">
 	select * from user 
-	where id = #{id}
-</select>
-
-<select id="getUserByEmail" resultType="User">
-	select * from user 
-	where email = #{email} 
+	<where>
+		<if test="id!=null and id!=''">
+			and id = #{id}
+		</if>
+		<if test="email!=null and email!=''">
+			and email = #{email}
+		</if>
+	</where>
 </select>
 
 <update id="updateUser" parameterType="User">

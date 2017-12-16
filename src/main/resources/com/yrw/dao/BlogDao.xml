@@ -17,43 +17,42 @@
 		</collection>
 	</resultMap>
 	
+	<sql id="blogCols">
+		blog.id, blog.author, blog.title, blog.content, blog.createdTime, 
+		blog_tag_relation.tag as tags
+	</sql>
+	<sql id="userCols">
+		user.id as user_id, user.username
+	</sql>
+	
 	<select id="getBlogById" resultMap="BlogDetail">
-		select blog.id, blog.author, blog.title, blog.content, blog.createdTime, 
-		blog_tag_relation.tag as tags, 
-		user.id as user_id, user.username, user.email, user.description, user.avatar 
-		from blog left join blog_tag_relation 
+		select <include refid="blogCols"/>, 
+		<include refid="userCols"/>, user.email, user.description, user.avatar 
+		from blog left join user 
+		on blog.author = user.id 
+		left join blog_tag_relation 
 		on blog.id = blog_tag_relation.blogId 
-		left join user on blog.author = user.id 
 		where blog.id = #{id}
 	</select>
-	
-	<select id="getAllBlogs" resultMap="BlogDetail">
-		select blog.id, blog.author, blog.title, blog.content, blog.createdTime, 
-		blog_tag_relation.tag as tags, 
-		user.id as user_id, user.username  
-		from blog left join blog_tag_relation 
+  	
+  	<select id="getBlogs" resultMap="BlogDetail">
+  		select <include refid="blogCols"/>, 
+		<include refid="userCols"/> 
+		from blog left join user 
+		on blog.author = user.id 
+		left join blog_tag_relation 
 		on blog.id = blog_tag_relation.blogId 
-		left join user on blog.author = user.id  
+		<where>
+			<if test="userId!=null and userId!=''">
+				and user.id = #{userId}
+			</if>
+			<if test="tag!=null and tag!=''">
+				and blog.id in 
+				(select blogId from blog_tag_relation 
+				where tag = #{tag})
+			</if>
+		</where>
 		order by blog.createdTime desc
-	</select>
-	
-	<select id="getBlogsByAuthor" resultMap="BlogDetail">
-		select blog.id, blog.title, blog.content, blog.createdTime, 
-		blog_tag_relation.tag as tags 
-		from blog left join blog_tag_relation 
-		on blog.id = blog_tag_relation.blogId 
-		where blog.author = #{id} 
-		order by blog.createdTime
-	</select>
-	
-	  <select id="getBlogsByTag" resultMap="BlogDetail">
-	  	select blog.id, blog.title, blog.createdTime, 
-	  	blog_tag_relation.tag as tags 
-	  	from blog left join blog_tag_relation 
-		on blog.id = blog_tag_relation.blogId 
-		where blog.id in 
-		(select blogId from blog_tag_relation 
-		where tag = #{tag})
   	</select>
 	
 	<insert id="createBlog" parameterType="Blog" useGeneratedKeys="true" keyProperty="blog.id">
@@ -66,12 +65,6 @@
 	<update id="updateBlog" parameterType="Blog">
 		update blog set 
 		title = #{title}, content = #{content} 
-		where id = #{id}
-	</update>
-	
-	<update id="updateBlogHits">
-		update blog set 
-		hits = hits+1  
 		where id = #{id}
 	</update>
 	
