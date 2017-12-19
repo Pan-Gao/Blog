@@ -52,15 +52,12 @@
   <div class="row">
 
     <div class="col-sm-8">
-      <div class="blog-post" th:each="blog: ${blogs.list}">
+     <div class="blog-post" th:each="blog: ${blogs}">
         <h3 class="blog-post-title">
         		<a th:href="@{'/blogs/'+${blog.id}}" th:text="${blog.title}">title</a>
         	</h3>
         发布于<span class="text-muted date" th:text="${#dates.format(blog.createdTime, 'MM月dd日 HH:mm')}"> 2 mins ago</span>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-        <a th:href="@{'/blogs?tag=' + ${tag.name}}" th:each="tag: ${blog.tags}">
-	        <span class="label label-default tag" th:text="${tag.name}">标签</span>
-	    </a>
 	    <div class="single-blog-detail">
         <p class="blog-post-content" id="content" th:utext="${blog.content}">
         		content.
@@ -72,21 +69,6 @@
 		    })  
 		</script>
       </div>
-      
-      <nav>
-      	<ul class="pager">
-        		<li th:if=${blogs.hasPreviousPage} class="previous">
-        			<a th:href="@{'?page=' + ${blogs.prePage}}">
-        			<span aria-hidden="true">&larr;
-        			</span>上一页</a>
-        		</li>
-        		<li th:if=${blogs.hasNextPage} class="next">
-        			<a th:href="@{'?page=' + ${blogs.nextPage}}"> 
-        			<span aria-hidden="true">&rarr;
-        			</span>下一页</a>
-        		</li>
-        </ul>
-       </nav>
 
     </div>
 

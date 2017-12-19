@@ -36,8 +36,8 @@
       	<li><a th:if="${session.CURRENT_USER == null}" href="/login">登陆</a></li>
         <li><a th:if="${session.CURRENT_USER == null}" href="/register">注册</a></li>
       </ul>
-      <form class="navbar-form navbar-right">
-        <input type="text" class="form-control" placeholder="搜索...">
+      <form class="navbar-form navbar-right" method="post" action="/blogs/search">
+        <input name="key" type="text" class="form-control" placeholder="搜索...">
       </form>
     </div>
   </div>

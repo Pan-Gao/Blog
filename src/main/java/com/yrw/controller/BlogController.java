@@ -1,10 +1,14 @@
 package com.yrw.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +30,7 @@ import com.yrw.model.User;
 import com.yrw.service.BlogService;
 import com.yrw.service.CommentService;
 import com.yrw.service.UserService;
+import com.yrw.util.LuceneUtils;
 import com.yrw.util.TagUtils;
 
 @Controller
@@ -116,5 +121,22 @@ public class BlogController{
 		blogService.deleteBlog(id);
 		redirectAttributes.addFlashAttribute("delete", "success");
 		return "redirect:/admin/"+((User)session.getAttribute("CURRENT_USER")).getId();
+	}
+	
+	@PostMapping("/blogs/search")
+	public String search(Model model, @RequestParam("key") String key) {
+		List<Blog> blogs = new ArrayList<>();
+		if(key == null || key.length() == 0) {
+			blogs = blogService.showBlogs();
+		}else {
+			try {
+				blogs = LuceneUtils.search(key, 1, 5);
+			} catch (IOException | ParseException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+		}
+		model.addAttribute("blogs", blogs);
+		return "search";
 	}
 }
