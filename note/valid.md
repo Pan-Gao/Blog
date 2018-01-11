@@ -1,4 +1,4 @@
-pring mvc支持的处理方法的前面包括以下几种：
+spring mvc支持的处理方法的前面包括以下几种：
 1.使用@RequestParam绑定请求参数值。
 ```
 public String showBlogs(
@@ -36,7 +36,7 @@ public String handler(Blog blog) {
 5.其他
 还可以使用原生的servlet api(HttpServletRequest, HttpSession等)，I/O对象(InputStream, OutputStream)。
 
-###关于数据校验
+### 关于数据校验
 Sping拥有自己独立的数据校验框架，同时支持JSR-303标准的校验框架。Spring的DataBinder在进行数据绑定时，可同时调用校验框架完成数据校验工作。
 校验框架接口：
 ```
@@ -87,7 +87,7 @@ return "create";
 BindResult必须接在被@Valid标注的入参对象后面，否则会出错。
 原因是：Spring mvc是通过对处理方法前面的规约来保存校验结果的：前一个表单对象的校验结果保存在其后的入参中，这个保存结果的入参必须是BindingResult或Errors类型，这两个类都在org.springframework.validation包中。就是说需校验的表单对象和绑定结果必须成对出现。
 
-###Errors和BindingResult接口
+### Errors和BindingResult接口
 Errors：存储和暴露关于数据绑定错误和验证错误相关信息的接口，提供了相关存储和获取错误消息的方法。
 ```
 package org.springframework.validation;
@@ -144,20 +144,21 @@ BindingResult接口扩展了Errors接口。
 
 如何在页面中显示错误的？
 Spring mvc会将校验结果保存到对应的BindingResult或Errors对象中，还会保存在“隐含模型”中，暴露给视图对象。
+![](https://github.com/yuanrw/Blog/blob/master/note/pic/valid1.png)
 
 表单验证分为客户端验证和服务器端验证。
 
-##表单验证
+## 表单验证
 客户端验证。当用户填写的表单存在明显错误时，浏览器端Javascript提示错误信息，并阻止表单提交。这样既避免了页面跳转更加用户友好，又减少了服务器的负载。
 
 服务器端验证可防止恶意的攻击。另外，有些验证过程客户端无法完成，比如用户名已存在、密码错误等。
 
-###服务端验证
+### 服务端验证
 针对上述第四种绑定参数方式。
 可以使用spring的校验框架。
 参见上面的方法。
 
-###客户端验证
+### 客户端验证
 登录，注册的页面，表单提交后，浏览器发送了一个POST请求到服务器，如果验证失败了，服务器重新渲染页面返回，但是页面上只是多出了一个错误消息。但是每一次完全刷新整个页面也是有代价的——从服务器上获得的完整页面内容会很大，传输过程需要时间，浏览器渲染也需要时间，这就会对用户体验造成巨大的影响。
 
 用AJAX技术优化，不重新加载页面便能向服务器发送HTTP请求。

@@ -1,4 +1,4 @@
-##文件上传
+## 文件上传
 Springmvc为文件上传提供了直接支持，这种支持是通过即插即用的MultipartResolver实现的。MultipartResovler实现类是：CommonsMultipartResolver。
 在Spring mvc上下文中默认没有配置MultipartResolver，因此默认情况下不能处理文件上传工作。需要先在上下文中配置MultipartResolver。
 
@@ -14,7 +14,7 @@ defaultEncoding  请求的编码格式，默认为ISO-8859-1
 maxUploadSize  上传文件大小上限，单位为字节（5MB）
 uploadTempDir  上传文件的临时路径
 
-###编写控制器和文件上传表单页面
+### 编写控制器和文件上传表单页面
 ```
 public String handleFileUpload(@RequestParam("file") MultipartFile file){
 if(!file.isEmpty()){
