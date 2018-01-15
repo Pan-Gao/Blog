@@ -63,6 +63,7 @@ IndexWriter.close();
 由于**IndexWriter和IndexReader这两个类本身是线程安全的**，也就是说，这两个类的实例都可以被多线程共享，Lucene会对各个线程中所有对索引进行修改的方法的调用进行恰当的同步处理，以此来确保修改操作能一个接着一个地有序进行。
 
 可以把这两个类做成单例。整个应用都用同一个IndexWriter和IndexReader。
+单例模式有多种实现方法，可以用枚举实现。
 
 **注意**在初始化IndexWriter时，IndexWriterConfig.OpenMode有三种模式：
 ```
@@ -104,4 +105,5 @@ public IndexReader getIndexReader() throws IOException {
 
 参考资料：
 [博客：Lucene的并发性安全性以及锁](https://www.cnblogs.com/likehua/archive/2012/02/16/2354532.html)
+[单例模式的几种实现方法](http://www.importnew.com/18872.html)
 [Lucene 6.6.0 官方文档](http://lucene.apache.org/core/6_6_0/core/index.html)
