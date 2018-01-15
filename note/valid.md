@@ -2,16 +2,16 @@ spring mvc支持的处理方法的前面包括以下几种：
 1.使用@RequestParam绑定请求参数值。
 ```
 public String showBlogs(
-@RequestParam("tag") Optional<String> tag, 
-@RequestParam("page") Optional<Integer> page) {
-……
+            @RequestParam("tag") Optional<String> tag, 
+            @RequestParam("page") Optional<Integer> page) {
+        ……
 }
 ```
 2.使用@CookieValue绑定请求中的cookie值
 ```
 public String handler(
-@CookieValue(value="sessionId") Optional<String> sessionId){
-……
+            @CookieValue(value="sessionId") Optional<String> sessionId){
+        ……
 }
 ```
 
@@ -19,8 +19,8 @@ public String handler(
 请求报文包含了若干个报文头属性，服务器可据此获知客户端的信息。
 ```
 public String handler(@RequestHeader("Accet-Encoding") String encoding,
-@RequestHeader("Keep-Alive") long keepAlive){
-……
+            @RequestHeader("Keep-Alive") long keepAlive){
+        ……
 }
 ```
 
@@ -28,7 +28,7 @@ public String handler(@RequestHeader("Accet-Encoding") String encoding,
 需要一个拥有若干属性的POJO，Spring mvc会按请求参数名和命令/表单对象属性名匹配的方式，自动为该属性填充属性值。支持级联的属性名。
 ```
 public String handler(Blog blog) {
-……
+    ……
 }
 ```
 比方说Blog对象中有两个字段title和content，Spring会将HTTP请求中的数据title和content自动注入（根据名字进行匹配）到Blog对象中。
@@ -44,11 +44,11 @@ package org.springframework.validation;
 
 public abstract interface Validator
 {
-//能够对class类型的对象校验
-public abstract boolean supports(Class<?> paramClass);
+    //能够对class类型的对象校验
+    public abstract boolean supports(Class<?> paramClass);
 
-//对目标类target进行校验，并将校验错误记录在errors中
-public abstract void validate(Object paramObject, Errors paramErrors);
+    //对目标类target进行校验，并将校验错误记录在errors中
+    public abstract void validate(Object paramObject, Errors paramErrors);
 }
 ```
 
@@ -58,9 +58,9 @@ LocalValidatorFactoryBean即实现了Spring的Validator接口，又实现了JSR-
 ```
 public class BlogCreateForm {
 
-@Size(min = 1, max = 50, message="文章标题长度须在1-50字之间")
-private String title;
-.......
+    @Size(min = 1, max = 50, message="文章标题长度须在1-50字之间")
+    private String title;
+    ......
 }
 ```
 控制器：
@@ -68,19 +68,19 @@ private String title;
 //提交新建的博文
 @PutMapping("/blogs/create")
 public String createBlog(@ModelAttribute ("blog") @Valid BlogCreateForm form, 
-BindingResult result){
-if(result.hasErrors()){
-return "create";
-}
-.........
+    BindingResult result){
+    if(result.hasErrors()){
+        return "create";
+    }
+    ......
 }
 ```
 渲染页面：
 ```
 <div class="form-group">
-<label for="title">标题</label>
-<input type="text" class="form-control" name="title" th:field="*{title}" placeholder="文章的标题" autofocus="">
-<p th:if="${#fields.hasErrors('title')}" th:errors="*{title}">标题长度必须在2-30之间</p>
+    <label for="title">标题</label>
+    <input type="text" class="form-control" name="title" th:field="*{title}" placeholder="文章的标题" autofocus="">
+    <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}">标题长度必须在2-30之间</p>
 </div>
 ```
 
@@ -93,51 +93,51 @@ Errors：存储和暴露关于数据绑定错误和验证错误相关信息的�
 package org.springframework.validation;
 
 public interface Errors {
-/**
-* Return if there were any errors.
-*/
-boolean hasErrors();
+    /**
+    * Return if there were any errors.
+    */
+    boolean hasErrors();
 
-/**
-* Return the total number of errors.
-*/
-int getErrorCount();
+    /**
+    * Return the total number of errors.
+    */
+    int getErrorCount();
 
-/**
-* Get all errors, both global and field ones.
-* @return List of {@link ObjectError} instances
-*/
-List<ObjectError> getAllErrors();
+    /**
+    * Get all errors, both global and field ones.
+    * @return List of {@link ObjectError} instances
+    */
+    List<ObjectError> getAllErrors();
 
-.......
+    ......
 
-/**
-* Are there any field errors?
-* @return {@code true} if there are any errors associated with a field
-* @see #hasGlobalErrors()
-*/
-boolean hasFieldErrors();
+    /**
+    * Are there any field errors?
+    * @return {@code true} if there are any errors associated with a field
+    * @see #hasGlobalErrors()
+    */
+    boolean hasFieldErrors();
 
-/**
-* Return the number of errors associated with a field.
-* @return the number of errors associated with a field
-* @see #getGlobalErrorCount()
-*/
-int getFieldErrorCount();
+    /**
+    * Return the number of errors associated with a field.
+    * @return the number of errors associated with a field
+    * @see #getGlobalErrorCount()
+    */
+    int getFieldErrorCount();
 
-/**
-* Get all errors associated with a field.
-* @return a List of {@link FieldError} instances
-*/
-List<FieldError> getFieldErrors();
+    /**
+    * Get all errors associated with a field.
+    * @return a List of {@link FieldError} instances
+    */
+    List<FieldError> getFieldErrors();
 
-/**
-* Get the <i>first</i> error associated with a field, if any.
-* @return the field-specific error, or {@code null}
-*/
-FieldError getFieldError();
+    /**
+    * Get the <i>first</i> error associated with a field, if any.
+    * @return the field-specific error, or {@code null}
+    */
+    FieldError getFieldError();
 
-........
+    ......
 }
 ```
 BindingResult接口扩展了Errors接口。
@@ -172,62 +172,62 @@ Spring mvc会将校验结果保存到对应的BindingResult或Errors对象中，
 @PostMapping("/login")
 @ResponseBody
 public LoginForm login(@RequestBody UserLoginForm form, 
-@RequestParam("remember-me") Optional<String> rememberMe, 
-@RequestParam("next") Optional<String> next, 
-HttpSession session) {
+            @RequestParam("remember-me") Optional<String> rememberMe, 
+            @RequestParam("next") Optional<String> next, 
+            HttpSession session) {
 
-LoginForm loginStatus = new LoginForm();		
-//登陆
-User user = userService.login(form.getEmail(), form.getPassword());
+    LoginForm loginStatus = new LoginForm();		
+    //登陆
+    User user = userService.login(form.getEmail(), form.getPassword());
 
-if(user == null) {
-//登陆失败
-loginStatus.setStatus("failed");
-loginStatus.setMessage("登陆失败！");
-return loginStatus;
-}else {
-//登陆成功
-session.setAttribute("CURRENT_USER", user);
+    if(user == null) {
+        //登陆失败
+        loginStatus.setStatus("failed");
+        loginStatus.setMessage("登陆失败！");
+        return loginStatus;
+    }else {
+        //登陆成功
+        session.setAttribute("CURRENT_USER", user);
 
-//添加cookie
+        //添加cookie
 
-//设置状态值，返回给浏览器
-loginStatus.setStatus("success");
-loginStatus.setMessage("登陆成功！");
-loginStatus.setInfo(next.isPresent()?next.get():"");
-return loginStatus;
-}
+        //设置状态值，返回给浏览器
+        loginStatus.setStatus("success");
+        loginStatus.setMessage("登陆成功！");
+        loginStatus.setInfo(next.isPresent()?next.get():"");
+        return loginStatus;
+    }
 }
 ```
 ```
 function validateForm(){
-var email = document.getElementById("email").value;
-var reg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
-if (!reg.test(email)){
-document.getElementById("emailMes").innerHTML = "邮箱格式不正确！";
-return false;
-}
-var password = document.getElementById("password").value;
-if(password.length<6 || password.length>30){
-document.getElementById("passwordMes").innerHTML = "密码长度在6-30位之间！";
-return false;
-}
-var data = {email: email, password: password};
-$.ajax({
-url: window.location.pathname,
-method: "POST",
-contentType: "application/json; charset=utf-8",
-data: JSON.stringify(data),
-success:function(msg){
-if(msg.status == "success"){
-document.location.href = "http://localhost:8080/"+msg.info;
-}else if(msg.status == "failed"){
-document.getElementById("alert").innerHTML = '<div class="alert alert-warning"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Warning!</strong>邮箱或密码不正确，请重试！</div>';
-}else{
-document.write(msg);
-}
-}
-});
+    var email = document.getElementById("email").value;
+    var reg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+    if (!reg.test(email)){
+        document.getElementById("emailMes").innerHTML = "邮箱格式不正确！";
+        return false;
+    }
+    var password = document.getElementById("password").value;
+    if(password.length<6 || password.length>30){
+        document.getElementById("passwordMes").innerHTML = "密码长度在6-30位之间！";
+        return false;
+    }
+    var data = {email: email, password: password};
+    $.ajax({
+        url: window.location.pathname,
+        method: "POST",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        success:function(msg){
+            if(msg.status == "success"){
+            document.location.href = "http://localhost:8080/"+msg.info;
+            }else if(msg.status == "failed"){
+                document.getElementById("alert").innerHTML = '<div class="alert alert-warning"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Warning!</strong>邮箱或密码不正确，请重试！</div>';
+            }else{
+                document.write(msg);
+            }
+        }
+    });
 }
 ```
 
