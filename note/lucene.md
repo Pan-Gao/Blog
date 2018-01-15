@@ -105,5 +105,7 @@ public IndexReader getIndexReader() throws IOException {
 
 参考资料：
 [博客：Lucene的并发性安全性以及锁](https://www.cnblogs.com/likehua/archive/2012/02/16/2354532.html)
+
 [单例模式的几种实现方法](http://www.importnew.com/18872.html)
+
 [Lucene 6.6.0 官方文档](http://lucene.apache.org/core/6_6_0/core/index.html)
