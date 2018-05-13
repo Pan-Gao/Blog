@@ -1,10 +1,11 @@
-footer{
-  background: #000000;
-  color: #aaa;
-  padding: 15px;
+footer {
+    background: #000000;
+    color: #aaa;
+    padding: 15px;
 }
-.buttom{
-  position:fixed; 
-  bottom:0;
-  width:100%;
+
+.buttom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }

@@ -2,7 +2,6 @@ package com.yrw.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 /*
@@ -10,76 +9,86 @@ import java.util.Set;
  * 硬盘中，或者通过流的方式进行发送，为缓存、集群等功能带来便利。
  * 也方便把PO对象打印为一个字符串
  */
-public class Blog implements Serializable{
-	
-	private Long id;
-	
-	private String title;
+public class Blog implements Serializable {
 
-	private User author;
-	
-	private String content;
-	
-	private Date createdTime;
-	
-	private Set<Tag> tags;
-	
-	public Blog(){
-		createdTime = new Date();
-	}
-	
-	public Blog(String title, String content){
-		this();
-		this.title = title;
-		this.content = content;
-	}
-	
-	public Blog(String title, String content, User author){
-		this(title, content);
-		this.setAuthor(author);
-	}
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
+  private Long id;
 
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
-	public Date getCreatedTime() {
-		return createdTime;
-	}
-	public void setCreatedTime(Date createdTime) {
-		this.createdTime = createdTime;
-	}
+  private String title;
 
-	public Set<Tag> getTags() {
-		return tags;
-	}
+  private User author;
 
-	public void setTags(Set<Tag> tags) {
-		this.tags = tags;
-	}
+  private String content;
 
-	public User getAuthor() {
-		return author;
-	}
+  private Date createdTime;
 
-	public void setAuthor(User author) {
-		this.author = author;
-	}
+  private Set<Tag> tags;
 
+  public Blog() {
+    createdTime = new Date();
+  }
+
+  public Blog(String title, String content) {
+    this();
+    this.title = title;
+    this.content = content;
+  }
+
+  public Blog(String title, String content, User author) {
+    this(title, content);
+    this.setAuthor(author);
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public Date getCreatedTime() {
+    return createdTime;
+  }
+
+  public void setCreatedTime(Date createdTime) {
+    this.createdTime = createdTime;
+  }
+
+  public Set<Tag> getTags() {
+    return tags;
+  }
+
+  public void setTags(Set<Tag> tags) {
+    this.tags = tags;
+  }
+
+  public User getAuthor() {
+    return author;
+  }
+
+  public void setAuthor(User author) {
+    this.author = author;
+  }
+
+  @Override
+  public String toString() {
+    return "title:" + this.title + " content:" + this.content;
+  }
 
 }
