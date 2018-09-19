@@ -12,18 +12,18 @@ import javax.annotation.PreDestroy;
 @EnableCaching
 public class CacheConfiguration {
 
-  private net.sf.ehcache.CacheManager cacheManager;
+    private net.sf.ehcache.CacheManager cacheManager;
 
-  @PreDestroy
-  public void destroy() {
-    cacheManager.shutdown();
-  }
+    @PreDestroy
+    public void destroy() {
+        cacheManager.shutdown();
+    }
 
-  @Bean
-  public CacheManager cacheManager() {
-    cacheManager = net.sf.ehcache.CacheManager.create();
-    EhCacheCacheManager ehCacheManager = new EhCacheCacheManager();
-    ehCacheManager.setCacheManager(cacheManager);
-    return ehCacheManager;
-  }
+    @Bean
+    public CacheManager cacheManager() {
+        cacheManager = net.sf.ehcache.CacheManager.create();
+        EhCacheCacheManager ehCacheManager = new EhCacheCacheManager();
+        ehCacheManager.setCacheManager(cacheManager);
+        return ehCacheManager;
+    }
 }

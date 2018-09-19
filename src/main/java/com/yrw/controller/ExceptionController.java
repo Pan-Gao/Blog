@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 //这个注释可以被应用于Spring应用上下文中的所有@Controller抛出的异常
 @ControllerAdvice
 public class ExceptionController {
-  private Logger logger = LoggerFactory.getLogger(ExceptionController.class);
+    private Logger logger = LoggerFactory.getLogger(ExceptionController.class);
 
-  //404页面
-  @ExceptionHandler(NotFoundException.class)
-  public String notFoundException() throws Exception {
-    return "404";
-  }
+    //404页面
+    @ExceptionHandler(NotFoundException.class)
+    public String notFoundException() throws Exception {
+        return "404";
+    }
     /*
     //方便调试
     @ExceptionHandler(value = Exception.class)

@@ -11,84 +11,84 @@ import java.util.Set;
  */
 public class Blog implements Serializable {
 
-  private Long id;
+    private Long id;
 
-  private String title;
+    private String title;
 
-  private User author;
+    private User author;
 
-  private String content;
+    private String content;
 
-  private Date createdTime;
+    private Date createdTime;
 
-  private Set<Tag> tags;
+    private Set<Tag> tags;
 
-  public Blog() {
-    createdTime = new Date();
-  }
+    public Blog() {
+        createdTime = new Date();
+    }
 
-  public Blog(String title, String content) {
-    this();
-    this.title = title;
-    this.content = content;
-  }
+    public Blog(String title, String content) {
+        this();
+        this.title = title;
+        this.content = content;
+    }
 
-  public Blog(String title, String content, User author) {
-    this(title, content);
-    this.setAuthor(author);
-  }
+    public Blog(String title, String content, User author) {
+        this(title, content);
+        this.setAuthor(author);
+    }
 
-  public Long getId() {
-    return id;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public String getTitle() {
-    return title;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-  public String getContent() {
-    return content;
-  }
+    public String getContent() {
+        return content;
+    }
 
-  public void setContent(String content) {
-    this.content = content;
-  }
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-  public Date getCreatedTime() {
-    return createdTime;
-  }
+    public Date getCreatedTime() {
+        return createdTime;
+    }
 
-  public void setCreatedTime(Date createdTime) {
-    this.createdTime = createdTime;
-  }
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
 
-  public Set<Tag> getTags() {
-    return tags;
-  }
+    public Set<Tag> getTags() {
+        return tags;
+    }
 
-  public void setTags(Set<Tag> tags) {
-    this.tags = tags;
-  }
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
 
-  public User getAuthor() {
-    return author;
-  }
+    public User getAuthor() {
+        return author;
+    }
 
-  public void setAuthor(User author) {
-    this.author = author;
-  }
+    public void setAuthor(User author) {
+        this.author = author;
+    }
 
-  @Override
-  public String toString() {
-    return "title:" + this.title + " content:" + this.content;
-  }
+    @Override
+    public String toString() {
+        return "title:" + this.title + " content:" + this.content;
+    }
 
 }

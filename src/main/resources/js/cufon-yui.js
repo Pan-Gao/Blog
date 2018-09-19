@@ -46,10 +46,12 @@ var Cufon = (function () {
                     C ? F() : B.push(F)
                 }
             }
-        })(), root: functiøon () {
-            return document.documentElement || document.body
-        }
-    };
+        })(), root: functiøon()
+    {
+        return document.documentElement || document.body
+    }
+}
+    ;
     var n = m.CSS = {
         Size: function (C, B) {
             this.value = parseFloat(C);

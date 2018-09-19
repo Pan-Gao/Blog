@@ -4,15 +4,15 @@ import net.sf.ehcache.constructs.web.filter.SimpleCachingHeadersPageCachingFilte
 
 public class PageCachingFilter extends SimpleCachingHeadersPageCachingFilter {
 
-  private final String customCacheName;
+    private final String customCacheName;
 
-  public PageCachingFilter(String name) {
-    this.customCacheName = name;
-  }
+    public PageCachingFilter(String name) {
+        this.customCacheName = name;
+    }
 
-  @Override
-  protected String getCacheName() {
-    return customCacheName;
-  }
+    @Override
+    protected String getCacheName() {
+        return customCacheName;
+    }
 
 }

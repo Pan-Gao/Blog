@@ -10,9 +10,9 @@ import java.util.List;
 @Mapper
 public interface CommentDao {
 
-  void createComment(@Param("blogId") Long blogId, Comment comment);
+    void createComment(@Param("blogId") Long blogId, Comment comment);
 
-  void deleteComment(@Param("id") Long commentId);
+    void deleteComment(@Param("id") Long commentId);
 
-  List<Comment> getCommentsByBlogId(@Param("id") Long id);
+    List<Comment> getCommentsByBlogId(@Param("id") Long id);
 }

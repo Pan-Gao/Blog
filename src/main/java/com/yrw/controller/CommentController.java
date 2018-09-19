@@ -20,24 +20,24 @@ import java.util.Date;
 @Controller
 public class CommentController {
 
-  @Autowired
-  private CommentService commentService;
+    @Autowired
+    private CommentService commentService;
 
-  //提交评论
-  @PostMapping("/blogs/{id}/comments")
-  @ResponseBody
-  public CommentForm commentBlog(@RequestBody CommentForm form,
-                                 @PathVariable("id") Long id,
-                                 Model model,
-                                 HttpSession session) throws ParseException {
+    //提交评论
+    @PostMapping("/blogs/{id}/comments")
+    @ResponseBody
+    public CommentForm commentBlog(@RequestBody CommentForm form,
+                                   @PathVariable("id") Long id,
+                                   Model model,
+                                   HttpSession session) throws ParseException {
 
-    form.setCommentor(((User) session.getAttribute("CURRENT_USER")));
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    form.setCreatedTime(format.format(new Date()));
-    Comment newComment = form.toComment();
-    commentService.createComment(id, newComment);
-    form.setStatus("success");
-    form.setMessage("评论成功！");
-    return form;
-  }
+        form.setCommentor(((User) session.getAttribute("CURRENT_USER")));
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        form.setCreatedTime(format.format(new Date()));
+        Comment newComment = form.toComment();
+        commentService.createComment(id, newComment);
+        form.setStatus("success");
+        form.setMessage("评论成功！");
+        return form;
+    }
 }

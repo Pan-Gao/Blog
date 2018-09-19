@@ -11,15 +11,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-  @Override
-  public void addInterceptors(InterceptorRegistry registry) {
-    //registry.addInterceptor(new CheckInterceptor())
-    //		.addPathPatterns("/**");
-    registry.addInterceptor(new LoginInterceptor())
-      .addPathPatterns("/blogs/create");
-    registry.addInterceptor(new LoginInterceptor())
-      .addPathPatterns("/admin/**");
-    registry.addInterceptor(new LoginInterceptor())
-      .addPathPatterns("**/comments");
-  }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        //registry.addInterceptor(new CheckInterceptor())
+        //		.addPathPatterns("/**");
+        registry.addInterceptor(new LoginInterceptor())
+                .addPathPatterns("/blogs/create");
+        registry.addInterceptor(new LoginInterceptor())
+                .addPathPatterns("/admin/**");
+        registry.addInterceptor(new LoginInterceptor())
+                .addPathPatterns("**/comments");
+    }
 }

@@ -13,20 +13,20 @@ import java.util.Set;
 @Component
 public class TagService {
 
-  private ZSetOperations<String, String> zSetOperations;
+    private ZSetOperations<String, String> zSetOperations;
 
-  @Autowired
-  public TagService(RedisTemplate<String, String> redisTemplate) {
-    this.zSetOperations = redisTemplate.opsForZSet();
-  }
-
-  public List<Tag> getTags() {
-    Set<String> tagsSet = zSetOperations.range("tags", 0, 19);
-    List<Tag> tags = new ArrayList<>();
-    for (String tag : tagsSet) {
-      tags.add(new Tag(tag, zSetOperations.score("tags", tag)));
+    @Autowired
+    public TagService(RedisTemplate<String, String> redisTemplate) {
+        this.zSetOperations = redisTemplate.opsForZSet();
     }
-    return tags;
-  }
+
+    public List<Tag> getTags() {
+        Set<String> tagsSet = zSetOperations.range("tags", 0, 19);
+        List<Tag> tags = new ArrayList<>();
+        for (String tag : tagsSet) {
+            tags.add(new Tag(tag, zSetOperations.score("tags", tag)));
+        }
+        return tags;
+    }
 
 }

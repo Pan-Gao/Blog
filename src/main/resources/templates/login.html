@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8">
@@ -78,10 +78,10 @@
             data: JSON.stringify(data),
             success: function (msg) {
                 if (msg.status == "success") {
-                    var curWwwPath=window.document.location.href;
-                    var pathName=window.document.location.pathname;
-                    var pos=curWwwPath.indexOf(pathName);
-                    var localhostPath=curWwwPath.substring(0,pos);
+                    var curWwwPath = window.document.location.href;
+                    var pathName = window.document.location.pathname;
+                    var pos = curWwwPath.indexOf(pathName);
+                    var localhostPath = curWwwPath.substring(0, pos);
                     console.log("localhostPath: " + localhostPath);
                     document.location.href = localhostPath + "/" + msg.info;
                 } else if (msg.status == "failed") {

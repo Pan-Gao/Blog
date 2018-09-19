@@ -4,35 +4,35 @@
 
 <mapper namespace="com.yrw.dao.UserDao">
 
-	<!-- 二级缓存 -->
-	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
-	
-<select id="getUser" resultType="User">
-	select * from user 
-	<where>
-		<if test="id!=null and id!=''">
-			and id = #{id}
-		</if>
-		<if test="email!=null and email!=''">
-			and email = #{email}
-		</if>
-	</where>
-</select>
+    <!-- 二级缓存 -->
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
 
-<update id="updateUser" parameterType="User">
+    <select id="getUser" resultType="User">
+        select * from user
+        <where>
+            <if test="id!=null and id!=''">
+                and id = #{id}
+            </if>
+            <if test="email!=null and email!=''">
+                and email = #{email}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateUser" parameterType="User">
 	update user set email = #{email}, username = #{username}, 
 	password = #{password}, description = #{description}, 
 	avatar = #{avatar} 
 	where id = #{id}
 </update>
 
-<insert id="createUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+    <insert id="createUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
 	insert into user (username, password, email, description) 
 	values 
 	(#{username}, #{password}, #{email}, #{description})
 </insert>
 
-<delete id="deleteUser">
+    <delete id="deleteUser">
 	delete from user where id = #{id}
 </delete>
 </mapper>

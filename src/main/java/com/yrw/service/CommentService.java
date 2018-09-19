@@ -11,21 +11,21 @@ import java.util.List;
 @Component
 public class CommentService {
 
-  @Autowired
-  private CommentDao commentDao;
+    @Autowired
+    private CommentDao commentDao;
 
-  //得到一篇博客的所有评论
-  public List<Comment> getCommentsByBlogId(Long id) {
-    return commentDao.getCommentsByBlogId(id);
-  }
+    //得到一篇博客的所有评论
+    public List<Comment> getCommentsByBlogId(Long id) {
+        return commentDao.getCommentsByBlogId(id);
+    }
 
-  @Async
-  public void createComment(Long blogId, Comment comment) {
-    commentDao.createComment(blogId, comment);
-  }
+    @Async
+    public void createComment(Long blogId, Comment comment) {
+        commentDao.createComment(blogId, comment);
+    }
 
-  @Async
-  public void deleteComment(Comment comment) {
-    commentDao.deleteComment(comment.getCommentId());
-  }
+    @Async
+    public void deleteComment(Comment comment) {
+        commentDao.deleteComment(comment.getCommentId());
+    }
 }
