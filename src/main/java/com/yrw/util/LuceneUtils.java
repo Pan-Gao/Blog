@@ -23,6 +23,7 @@ import java.util.List;
 public class LuceneUtils {
 
   private static final Logger logger = LoggerFactory.getLogger(LuceneUtils.class);
+  private static final String DEFAULT_LUCENE_DIR = System.getProperty("user.dir") + "/lucene";
 
   //创建
   public static void createIndex(Blog blog) throws IOException {
@@ -103,7 +104,7 @@ public class LuceneUtils {
 
     Reader() {
       try {
-        dir = FSDirectory.open(Paths.get("/Users/yrw/Desktop/lucene"));
+        dir = FSDirectory.open(Paths.get(DEFAULT_LUCENE_DIR));
         indexReader = DirectoryReader.open(dir);
       } catch (IOException e) {
         // TODO 自动生成的 catch 块
@@ -128,7 +129,7 @@ public class LuceneUtils {
 
     Writer() {
       try {
-        dir = FSDirectory.open(Paths.get("/Users/yrw/Desktop/lucene"));
+        dir = FSDirectory.open(Paths.get(DEFAULT_LUCENE_DIR));
         SmartChineseAnalyzer analyzer = new SmartChineseAnalyzer();
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
         //索引的打开方式，没有索引文件就新建，有就打开
@@ -146,7 +147,7 @@ public class LuceneUtils {
   }
 
   public static void main(String[] args) throws IOException {
-    Directory dir = FSDirectory.open(Paths.get("/Users/yrw/Desktop/lucene"));
+    Directory dir = FSDirectory.open(Paths.get(DEFAULT_LUCENE_DIR));
     SmartChineseAnalyzer analyzer = new SmartChineseAnalyzer();
     IndexWriterConfig config = new IndexWriterConfig(analyzer);
     System.out.println(config.getOpenMode());

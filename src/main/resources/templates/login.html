@@ -78,7 +78,12 @@
             data: JSON.stringify(data),
             success: function (msg) {
                 if (msg.status == "success") {
-                    document.location.href = "http://localhost:8080/" + msg.info;
+                    var curWwwPath=window.document.location.href;
+                    var pathName=window.document.location.pathname;
+                    var pos=curWwwPath.indexOf(pathName);
+                    var localhostPath=curWwwPath.substring(0,pos);
+                    console.log("localhostPath: " + localhostPath);
+                    document.location.href = localhostPath + "/" + msg.info;
                 } else if (msg.status == "failed") {
                     document.getElementById("alert").innerHTML = '<div class="alert alert-warning"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Warning!</strong>邮箱或密码不正确，请重试！</div>';
                 } else {

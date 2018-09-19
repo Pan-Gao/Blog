@@ -52,5 +52,6 @@ local.properties
 # Code Recommenders
 .recommenders
 
-idea/
+.idea/
 *.iml
+myBlog.log
